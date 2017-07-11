@@ -58,6 +58,8 @@
             $test_genre_1->save();
             $test_genre_2 = new Genre($genre_2);
             $test_genre_2->save();
+            var_dump($test_genre_1);
+            var_dump($test_genre_2);
 
             $result = Genre::getAll();
 
