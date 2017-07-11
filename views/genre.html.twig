@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>Music Library</title>
+</head>
+<body>
+    <h1>{{ genre.getGenre }}</h1>
+
+    {% if albums is not empty %}
+        <p>Here are the albums:</p>
+        <ul>
+            {% for album in albums %}
+                <li>{{ album.getAlbumName }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <h4>Add an Album</h4>
+
+    <form action='/albums' method='post'>
+        <input id="genre_id" name="genre_id" type="hidden" value="{{ genre.getId() }}">
+        <label for='description'>Album Name</label>
+        <input id='description' name='description' type='text'>
+
+        <button type='submit'>Add Album</button>
+    </form>
+
+    <p><a href='/'>Home</a></p>
+</body>
+</html>

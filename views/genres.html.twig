@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>To Do List</title>
+</head>
+<body>
+    <h1>Genres</h1>
+
+    {% if genres is not empty %}
+        <p>Here are all your categories:</p>
+        <ul>
+            {% for genre in genres %}
+                <li>{{ genre.getGenre }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form action='/genres' method='post'>
+        <label for='name'>Genre name</label>
+        <input id='name' name='name' type='text'>
+
+        <button type='submit'>Add Genre</button>
+    </form>
+    <form action='/delete_genres' method='post'>
+        <button type='submit'>Clear</button>
+    </form>
+
+    <p><a href='/'>Home</a></p>
+</body>
+</html>

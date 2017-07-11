@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>Music Library</title>
+</head>
+<body>
+    <h1>Albums</h1>
+
+    {% if albums is not empty %}
+        <p>Here are all your albums:</p>
+        <ul>
+            {% for album in albums %}
+                <li>{{ album.getAlbumName }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form action='/albums' method='post'>
+        <label for='album'>Album name</label>
+        <input id='album' name='album' type='text'>
+
+        <button type='submit'>Add album</button>
+    </form>
+    <form action='/delete_albums' method='post'>
+        <button type='submit'>Clear</button>
+    </form>
+
+    <p><a href='/'>Home</a></p>
+</body>
+</html>

@@ -2,11 +2,13 @@
     class Album
     {
         private $album_name;
+        private $genre_id;
         private $id;
 
-        function __construct($album_name, $id = null)
+        function __construct($album_name, $genre_id, $id = null)
         {
             $this->album_name = $album_name;
+            $this->genre_id = $genre_id;
             $this->id = $id;
         }
 
@@ -22,7 +24,7 @@
 
         function save()
         {
-            $executed = $GLOBALS['DB']->exec("INSERT INTO albums (description) VALUES ('{$this->getAlbumName()}');");
+            $executed = $GLOBALS['DB']->exec("INSERT INTO albums (description, genre_id) VALUES ('{$this->getAlbumName()}', {$this->getGenreId()});");
             if ($executed) {
                 $this->id = $GLOBALS['DB']->lastInsertId();
                 return true;
@@ -38,7 +40,8 @@
             foreach($returned_albums as $album) {
                 $album_name = $album['description'];
                 $id = $album['id'];
-                $new_album = new Album($album_name, $id);
+                $genre_id = $album['genre_id'];
+                $new_album = new Album($album_name, $genre_id, $id);
                 array_push($albums, $new_album);
             }
             return $albums;
@@ -59,6 +62,11 @@
             return $this->id;
         }
 
+        function getGenreId()
+        {
+            return $this->genre_id;
+        }
+
         static function find($search_id)
         {
             $returned_albums = $GLOBALS['DB']->prepare("SELECT * FROM albums WHERE id = :id");
@@ -67,8 +75,9 @@
             foreach($returned_albums as $album) {
                 $album_name = $album['description'];
                 $album_id = $album['id'];
+                $genre_id = $album['genre_id'];
                 if ($album_id == $search_id) {
-                    $found_album = new Album($album_name, $album_id);
+                    $found_album = new Album($album_name, $genre_id, $album_id);
                 }
             }
             return $found_album;

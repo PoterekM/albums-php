@@ -69,6 +69,20 @@
             }
             return $found_genre;
         }
+
+        function getAlbums()
+        {
+            $albums = Array();
+            $returned_albums = $GLOBALS['DB']->query("SELECT * FROM albums WHERE genre_id = {$this->getId()};");
+            foreach($returned_albums as $album) {
+                $album_name = $album['description'];
+                $album_id = $album['id'];
+                $genre_id = $album['genre_id'];
+                $new_album = new Album($album_name, $genre_id, $album_id);
+                array_push($albums, $new_album);
+            }
+            return $albums;
+        }
     }
 
 

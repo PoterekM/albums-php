@@ -1,0 +1,29 @@
+<html>
+<head>
+    <title>Music Library</title>
+</head>
+<body>
+    <h1>Welcome to the Music Library</h1>
+
+    <p>Create a new Genre</p>
+
+    <form action="/genres" method="post">
+        <label for="name">Genre Name:</label>
+        <input id="name" name="name" type="text">
+
+        <button type="submit">Add genre</button>
+    </form>
+
+    {% if genres is not empty %}
+        <p>Here are all of your genres:</p>
+        <ul>
+            {% for genre in genres %}
+                <li><a href="/genres/{{ genre.getId}}">{{ genre.getGenre }}</a></li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>There are no categories yet!</p>
+        {% endif %}
+
+</body>
+</html>

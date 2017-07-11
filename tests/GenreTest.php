@@ -6,6 +6,7 @@
     */
 
     require_once "src/Genre.php";
+    require_once "src/Album.php";
 
     $server = 'mysql:host=localhost:8889;dbname=music_test';
     $username = 'root';
@@ -17,6 +18,7 @@
         protected function tearDown()
         {
             Genre::deleteAll();
+            Album::deleteAll();
         }
 
         function testGetGenre()
@@ -58,8 +60,6 @@
             $test_genre_1->save();
             $test_genre_2 = new Genre($genre_2);
             $test_genre_2->save();
-            var_dump($test_genre_1);
-            var_dump($test_genre_2);
 
             $result = Genre::getAll();
 
@@ -93,6 +93,27 @@
             $result = Genre::find($test_genre_1->getId());
 
             $this->assertEquals($test_genre_1, $result);
+        }
+
+        function testGetAlbums()
+        {
+            $genre = "Acid House";
+            $test_genre = new Genre($genre);
+            $test_genre->save();
+
+            $test_genre_id = $test_genre->getId();
+
+            $album = "Slim Season 3";
+            $test_album = new Album($album, $test_genre_id);
+            $test_album->save();
+
+            $album2 = "Rich Forever 3";
+            $test_album_2 = new Album($album2, $test_genre_id);
+            $test_album_2->save();
+
+            $result = $test_genre->getAlbums();
+
+            $this->assertEquals([$test_album, $test_album_2], $result);
         }
 
 
